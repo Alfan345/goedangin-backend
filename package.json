@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
     "pdfkit": "^0.15.1",
+    "pdfmake": "^0.2.15",
     "random-password-generator": "^0.0.3",
     "twilio": "^5.3.6"
   }

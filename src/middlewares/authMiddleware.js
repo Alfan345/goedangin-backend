@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const secretKey = process.env.JWT_SECRET_KEY || "goedanginssht";
+const secretKey = "goedanginssht";
 
 const verifyToken = (request, h) => {
-  const token = request.headers.authorization;
+  const token = request.headers.authorization?.split(" ")[1];
   if (!token) {
     throw new Error("Token tidak ditemukan");
   }

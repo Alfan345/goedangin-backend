@@ -1,4 +1,5 @@
 const Hapi = require("@hapi/hapi");
+const Inert = require("@hapi/inert");
 const authRoutes = require("./src/auth/routes"); // Rute untuk autentikasi
 const managementRoutes = require("./src/management/routes"); // Rute untuk manajemen barang
 const { connectDB } = require("./src/database");
@@ -21,6 +22,7 @@ const init = async () => {
 
   // Register plugin JWT
   await server.register(Jwt);
+  await server.register(Inert);
 
   // Konfigurasi strategi autentikasi
   server.auth.strategy("jwt", "jwt", {
