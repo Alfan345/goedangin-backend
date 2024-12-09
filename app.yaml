@@ -1,0 +1,14 @@
+runtime: nodejs22
+
+env_variables:
+  SECRET_KEY: "goedanginssht"
+  DB_HOST: "34.101.96.242"  # Atau gunakan alamat IP atau hostname jika di deploy di GCP
+  DB_USER: "root"
+  DB_PASSWORD: "iniPunyaKu!"  # Pastikan ini aman dan tidak disebarkan
+  DB_NAME: "generalDB"
+
+handlers:
+  - url: /static
+    static_dir: static/
+  - url: /.*
+    script: auto

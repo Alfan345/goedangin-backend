@@ -3,23 +3,27 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "@google-cloud/cloud-sql-connector": "^1.4.0",
     "@hapi/hapi": "^21.3.12",
     "@hapi/inert": "^7.1.0",
     "@hapi/jwt": "^3.2.0",
     "axios": "^1.7.8",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.11.4",
+    "mysql2": "^3.11.5",
     "pdfkit": "^0.15.1",
     "pdfmake": "^0.2.15",
     "random-password-generator": "^0.0.3",
     "twilio": "^5.3.6"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

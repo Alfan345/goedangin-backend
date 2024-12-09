@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 const bcrypt = require("bcrypt");
 const { generateToken } = require("./jwt");
 const { db } = require("../database");
 const { sendWhatsAppMessage } = require("./waservice");
 const { errorHandler } = require("../utils/errorHandler");
 const { verifyToken } = require("../middlewares/authMiddleware");
-const secretKey = process.env.JWT_SECRET_KEY || "goedanginssht";
+const secretKey = process.env.SECRET_KEY;
 
 const userController = {
   registrasi: async (request, h) => {
