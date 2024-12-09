@@ -1,4 +1,13 @@
 runtime: nodejs22
+service: backend
+
+readiness_check:
+  path: "/readiness_check"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
 
 env_variables:
   SECRET_KEY: "goedanginssht"
@@ -12,3 +21,11 @@ handlers:
     static_dir: static/
   - url: /.*
     script: auto
+
+# automatic_scaling:
+#   min_num_instances: 1
+#   max_num_instances: 15
+#   cool_down_period_sec: 180
+#   cpu_utilization:
+#     target_utilization: 0.6
+#   target_concurrent_requests: 100

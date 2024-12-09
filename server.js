@@ -11,6 +11,18 @@ const init = async () => {
     host: "localhost",
   });
 
+  // Endpoint readiness check
+  server.route({
+    method: 'GET',
+    path: '/readiness_check',
+    handler: (request, h) => {
+      return h.response('OK').code(200);
+    },
+    options: {
+      auth: false // Nonaktifkan autentikasi untuk rute ini
+    }
+  });
+
   // Hubungkan ke database
   try {
     await connectDB();
@@ -26,7 +38,7 @@ const init = async () => {
 
   // Konfigurasi strategi autentikasi
   server.auth.strategy("jwt", "jwt", {
-    keys: "goedanginssht", // Ganti dengan secret key Anda
+    keys: process.env.SECRET_KEY, // Ganti dengan secret key Anda
     verify: {
       aud: false, // Nonaktifkan verifikasi audience jika tidak diperlukan
       iss: false, // Nonaktifkan verifikasi issuer jika tidak diperlukan
