@@ -1,32 +1,26 @@
 const mysql = require("mysql2/promise");
-const {Connector} = require('@google-cloud/cloud-sql-connector');
-require('dotenv').config();
-
-const connector = new Connector();
-
-const getClientOpts = async () => {
-  return await connector.getOptions({
-    instanceConnectionName: process.env.INSTANCE_CONNECTION_NAME, // Ganti dengan instance connection name Anda
-    ipType: 'PUBLIC',  // Atau 'PRIVATE' jika menggunakan IP privat
-  });
-};
+require("dotenv").config();
 
 const connectDB = async () => {
   try {
-    const clientOpts = await getClientOpts();
     const db = mysql.createPool({
-      ...clientOpts,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: process.env.DB_HOST, // Public IP dari Google Cloud SQL
+      user: process.env.DB_USER, // Username database
+      password: process.env.DB_PASSWORD, // Password database
+      database: process.env.DB_NAME, // Nama database
+      port: 3306, // Port default MySQL
+      waitForConnections: true,
+      connectionLimit: 10, // Jumlah maksimal koneksi pool
+      queueLimit: 0,
     });
 
-    const connection = await db.getConnection(); // Ambil satu koneksi dari pool
-    console.log("Database terhubung");
-    connection.release(); // Lepaskan koneksi setelah dicek
+    // Uji koneksi
+    const connection = await db.getConnection();
+    console.log("Database terhubung dengan Public IP");
+    connection.release();
   } catch (err) {
     console.error("Gagal terhubung ke database:", err.message);
-    throw err; // Lempar error agar bisa ditangkap di server.js
+    throw err;
   }
 };
 
