@@ -1,20 +1,26 @@
 const mysql = require("mysql2/promise");
 require("dotenv").config();
 
+// Inisialisasi pool database
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+// Fungsi untuk menguji koneksi ke database
 const connectDB = async () => {
   try {
-    const db = mysql.createPool({
-      host: process.env.DB_HOST, // Public IP dari Google Cloud SQL
-      user: process.env.DB_USER, // Username database
-      password: process.env.DB_PASSWORD, // Password database
-      database: process.env.DB_NAME, // Nama database
-      port: 3306, // Port default MySQL
-      waitForConnections: true,
-      connectionLimit: 10, // Jumlah maksimal koneksi pool
-      queueLimit: 0,
-    });
+    console.log("DB_HOST:", process.env.DB_HOST);
+    console.log("DB_USER:", process.env.DB_USER);
+    console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+    console.log("DB_NAME:", process.env.DB_NAME);
 
-    // Uji koneksi
     const connection = await db.getConnection();
     console.log("Database terhubung dengan Public IP");
     connection.release();
@@ -24,4 +30,5 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { connectDB };
+// Ekspor pool dan fungsi koneksi
+module.exports = { connectDB, db };
